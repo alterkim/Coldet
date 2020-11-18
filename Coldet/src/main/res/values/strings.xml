@@ -2,4 +2,7 @@
     <string name="app_name">Coldet</string>
     <string name="wallet_list">Wallet List</string>
     <string name="confirm">확인</string>
+    <string name="permissionCameraDenied">If camera is not authorized, can\'t scan QR code.</string>
+    <string name="errIncorrectICXAddr">Incorrect ICX address</string>
+    <string name="qrcodeScanGuide">Adrress can be imported by QR code.</string>
 </resources>
