@@ -24,6 +24,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".wallet.AddWalletActivity"/>
+        <activity android:name=".wallet.barcode.BarcodeCaptureActivity"/>
     </application>
 
 
