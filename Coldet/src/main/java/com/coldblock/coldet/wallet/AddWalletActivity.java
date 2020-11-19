@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import androidx.annotation.Nullable;
 
@@ -19,7 +20,7 @@ public class AddWalletActivity extends Activity {
         setContentView(R.layout.activity_add_wallet);
 
         // TODO: Make QR code button
-        Button setQR = findViewById(R.id.btn_confirm);
+        ImageButton setQR = findViewById(R.id.btn_open_qr);
         setQR.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

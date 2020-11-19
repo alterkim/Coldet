@@ -76,7 +76,6 @@ public class BarcodeCaptureActivity extends AppCompatActivity implements Barcode
 
     public static final String PARAM_SCANTYPE = "scanType";
     public enum ScanType{
-        PrivateKey,
         ICX_Address
     }
     private ScanType scanType;
@@ -88,6 +87,10 @@ public class BarcodeCaptureActivity extends AppCompatActivity implements Barcode
 
         mPreview = (CameraSourcePreview) findViewById(R.id.preview);
         mGraphicOverlay = (GraphicOverlay<BarcodeGraphic>) findViewById(R.id.graphicOverlay);
+
+        toast = findViewById(R.id.toast);
+        toastText = findViewById(R.id.text);
+        toast.setVisibility(View.INVISIBLE);
 
         imgTarget = findViewById(R.id.img_target);
         imgTarget.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
