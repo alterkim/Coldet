@@ -24,6 +24,9 @@ public class AddWalletActivity extends Activity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(AddWalletActivity.this, BarcodeCaptureActivity.class);
+                intent.putExtra(BarcodeCaptureActivity.AutoFocus, true);
+                intent.putExtra(BarcodeCaptureActivity.UseFlash, false);
+                intent.putExtra(BarcodeCaptureActivity.PARAM_SCANTYPE, BarcodeCaptureActivity.ScanType.ICX_Address.name());
                 startActivity(intent);
             }
         });

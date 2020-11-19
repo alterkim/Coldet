@@ -30,6 +30,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import com.coldblock.coldet.R;
@@ -46,7 +47,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.math.BigInteger;
 
-public class BarcodeCaptureActivity extends Activity implements BarcodeGraphicTracker.BarcodeUpdateListener {
+public class BarcodeCaptureActivity extends AppCompatActivity implements BarcodeGraphicTracker.BarcodeUpdateListener {
     private static final String TAG = "Barcode-reader";
 
     // intent request code to handle updating play services if needed.
@@ -75,13 +76,14 @@ public class BarcodeCaptureActivity extends Activity implements BarcodeGraphicTr
 
     public static final String PARAM_SCANTYPE = "scanType";
     public enum ScanType{
+        PrivateKey,
         ICX_Address
     }
     private ScanType scanType;
 
     @Override
-    public void onCreate(Bundle icircle){
-        super.onCreate(icircle);
+    public void onCreate(Bundle icicle){
+        super.onCreate(icicle);
         setContentView(R.layout.activity_barcode_capture);
 
         mPreview = (CameraSourcePreview) findViewById(R.id.preview);
