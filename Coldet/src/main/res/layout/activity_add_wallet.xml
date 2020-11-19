@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -29,10 +30,13 @@
                 android:text="@string/getAddress" />
 
             <EditText
+                android:id="@+id/edit_address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_weight="6" />
+                android:layout_weight="6"
+                android:textSize="10sp"
+                android:ellipsize="end"/>
 
             <ImageButton
                 android:id="@+id/btn_open_qr"
@@ -41,7 +45,7 @@
                 android:layout_gravity="center"
                 android:layout_marginRight="30dp"
                 android:layout_weight="0.2"
-                android:background="@color/white"
+                android:background="@drawable/round_rectangle_line"
                 android:src="@drawable/ic_qr_code_scanner_black_36dp" />
         </LinearLayout>
 

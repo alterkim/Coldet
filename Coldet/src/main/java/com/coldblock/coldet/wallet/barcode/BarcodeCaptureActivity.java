@@ -474,52 +474,12 @@ public class BarcodeCaptureActivity extends AppCompatActivity implements Barcode
 
 
         switch (scanType) {
-//            case PrivateKey: {
-//                try {
-//                    Hex.decode(value);
-//                    Intent data = new Intent();
-//                    data.putExtra(BarcodeObject, barcode);
-//                    setResult(CommonStatusCodes.SUCCESS, data);
-//                    finish();
-//                } catch (Exception e) {
-//                    showToast(getString(R.string.errScanPrivateKey));
-//                }
-//            } break;
-
             case ICX_Address: {
                 boolean fromWallet = getIntent().getSerializableExtra("wallet") != null &&
                         getIntent().getSerializableExtra("entry") != null &&
                         getIntent().getStringExtra("privateKey") != null;
 
-                if (value.startsWith("iconex://pay")) {
-                    try {
-                        String base64Encoded = value.split("data=")[1];
-                        JSONObject jsonObject = new JSONObject(new String(Base64.decode(base64Encoded, Base64.NO_WRAP)));
-                        String address = jsonObject.getString("address");
-                        BigInteger amount = ConvertUtil.hexStringToBigInt(jsonObject.getString("amount"), 18);
-
-                        if (!fromWallet) {
-                            Intent data = new Intent();
-                            barcode.displayValue = address;
-                            data.putExtra(BarcodeObject, barcode);
-                            setResult(CommonStatusCodes.SUCCESS, data);
-                            finish();
-                        } else {
-//                            if (!isStartActivity)
-//                                startActivity(new Intent(this, IconTransferActivity.class)
-//                                        .putExtra("walletInfo", getIntent().getSerializableExtra("wallet"))
-//                                        .putExtra("walletEntry", getIntent().getSerializableExtra("entry"))
-//                                        .putExtra("privateKey", getIntent().getStringExtra("privateKey"))
-//                                        .putExtra("address", address)
-//                                        .putExtra("amount", amount)
-//                                );
-//                            isStartActivity = true;
-                            finish();
-                        }
-                    } catch (Exception e) {
-                        showToast(getString(R.string.errIncorrectICXAddr));
-                    }
-                } else if (value.startsWith("hx") || value.startsWith("cx")) {
+                if (value.startsWith("hx") || value.startsWith("cx")) {
                     if (fromWallet) {
 //                        if (!isStartActivity)
 //                            startActivity(new Intent(this, IconTransferActivity.class)
@@ -541,16 +501,6 @@ public class BarcodeCaptureActivity extends AppCompatActivity implements Barcode
                     showToast(getString(R.string.errIncorrectICXAddr));
                 }
             } break;
-//            case ETH_Address: {
-//                if (value.startsWith("0x") && value.length() == 42 && !value.contains(" ")) {
-//                    Intent data = new Intent();
-//                    data.putExtra(BarcodeObject, barcode);
-//                    setResult(CommonStatusCodes.SUCCESS, data);
-//                    finish();
-//                } else {
-//                    showToast(getString(R.string.errIncorrectETHAddr));
-//                }
-//            } break;
         }
     }
 
