@@ -13,13 +13,20 @@ import com.coldblock.coldet.wallet.barcode.BarcodeCaptureActivity;
 import com.google.android.gms.common.api.CommonStatusCodes;
 import com.google.android.gms.vision.barcode.Barcode;
 
+import java.math.BigInteger;
+
+import foundation.icon.icx.Transaction;
+import foundation.icon.icx.TransactionBuilder;
+import foundation.icon.icx.data.Address;
+import foundation.icon.icx.data.IconAmount;
+
 public class CreateTransactionActivity extends Activity {
     public static int REQUEST_FOR_TO_ADDRESS = 1010;
 
-    private EditText toAddress;
-    private EditText fromAddress;
-    private EditText value;
-    private EditText nid;
+    private EditText et_toAddress;
+    private EditText et_fromAddress;
+    private EditText et_value;
+    private EditText et_nid;
 
     @Override
     protected void onCreate(Bundle savedBundle) {
@@ -28,13 +35,13 @@ public class CreateTransactionActivity extends Activity {
 
         Intent intent = getIntent();
 
-        toAddress = findViewById(R.id.et_toAddress);
+        et_toAddress = findViewById(R.id.et_toAddress);
 
-        fromAddress = findViewById(R.id.et_fromAddress);
-        fromAddress.setText(intent.getExtras().getString(WalletAddedActivity.Address));
+        et_fromAddress = findViewById(R.id.et_fromAddress);
+        et_fromAddress.setText(intent.getExtras().getString(WalletAddedActivity.Address));
 
-        value = findViewById(R.id.et_value);
-        nid = findViewById(R.id.et_nid);
+        et_value = findViewById(R.id.et_value);
+        et_nid = findViewById(R.id.et_nid);
 
 
         ImageButton from_qr = findViewById(R.id.btn_open_qr_to);
@@ -54,6 +61,11 @@ public class CreateTransactionActivity extends Activity {
             @Override
             public void onClick(View v) {
                 // TODO: Send transaction data to previous activity
+                Transaction unsignedTransaction = createTransaction();
+                System.out.println(unsignedTransaction.getFrom());
+                System.out.println(unsignedTransaction.getTo());
+                System.out.println(unsignedTransaction.getValue());
+                System.out.println(unsignedTransaction.getNid());
             }
         });
     }
@@ -66,9 +78,34 @@ public class CreateTransactionActivity extends Activity {
             if(resultCode == CommonStatusCodes.SUCCESS) {
                 if(data != null) {
                     Barcode barcode = data.getParcelableExtra(BarcodeCaptureActivity.BarcodeObject);
-                    toAddress.setText(barcode.displayValue);
+                    et_toAddress.setText(barcode.displayValue);
                 }
             }
         }
     }
+
+
+    /**
+     * Create transaction by input data
+     * @return transaction
+     */
+    private Transaction createTransaction() {
+        long timestamp = System.currentTimeMillis() * 1000L;
+        Address fromAddress = new Address(et_fromAddress.getText().toString());
+        Address toAddress = new Address(et_toAddress.getText().toString());
+        BigInteger networkId = new BigInteger(et_nid.getText().toString());
+        BigInteger value = IconAmount.of(et_value.getText().toString(), IconAmount.Unit.ICX).toLoop();
+        BigInteger stepLimit = new BigInteger("1000000");
+
+        return TransactionBuilder.newBuilder()
+                .nid(networkId)
+                .from(fromAddress)
+                .to(toAddress)
+                .value(value)
+                .stepLimit(stepLimit)
+                .timestamp(new BigInteger(Long.toString(timestamp)))
+                .build();
+    }
+
+
 }
