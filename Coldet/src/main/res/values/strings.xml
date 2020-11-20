@@ -7,4 +7,13 @@
     <string name="qrcodeScanGuide">Adrress can be imported by QR code.</string>
     <string name="getAddress">Address:</string>
     <string name="address_hint">주소를 입력하거나 QR 코드를 통해 가져오세요.</string>
+    <string name="value_hint">보낼 수량을 입력하세요.</string>
+    <string name="network_hint">사용할 네트워크를 선택하세요.</string>
+    <string name="create_transaction">Send</string>
+    <string name="to">To:</string>
+    <string name="from">From:</string>
+    <string name="value">Value:</string>
+    <string name="icx">ICX</string>
+    <string name="network_id">Network ID:</string>
+    <string name="transaction_info">Transaction Info</string>
 </resources>

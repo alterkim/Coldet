@@ -23,9 +23,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".wallet.AddWalletActivity"/>
+        <activity android:name=".wallet.activity.AddWalletActivity"/>
         <activity android:name=".wallet.barcode.BarcodeCaptureActivity"/>
-        <activity android:name=".wallet.WalletAddedActivity"/>
+        <activity android:name=".wallet.activity.WalletAddedActivity"/>
+        <activity android:name=".wallet.activity.CreateTransactionActivity"/>
     </application>
 
 

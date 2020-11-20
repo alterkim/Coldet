@@ -1,4 +1,4 @@
-package com.coldblock.coldet.wallet;
+package com.coldblock.coldet.wallet.activity;
 
 import android.app.Activity;
 import android.content.Intent;

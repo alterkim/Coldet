@@ -4,15 +4,12 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
-import com.coldblock.coldet.wallet.AddWalletActivity;
-import com.coldblock.coldet.wallet.WalletAddedActivity;
+import com.coldblock.coldet.wallet.activity.AddWalletActivity;
+import com.coldblock.coldet.wallet.activity.WalletAddedActivity;
 import com.google.android.gms.common.api.CommonStatusCodes;
 
 public class Coldet extends Activity {
