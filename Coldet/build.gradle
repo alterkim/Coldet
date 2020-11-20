@@ -29,7 +29,8 @@ android {
 }
 
 ext{
-    iconSdkVersion = '0.9.14'
+    iconSdkVersion = '1.0.0'
+    bouncycastleVersion = '1.60'
 }
 
 dependencies {
@@ -41,4 +42,5 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
     implementation "foundation.icon:icon-sdk:$iconSdkVersion"
+    implementation "org.bouncycastle:bcprov-jdk15on:$bouncycastleVersion"
 }
