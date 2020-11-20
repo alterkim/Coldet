@@ -6,4 +6,5 @@
     <string name="errIncorrectICXAddr">Incorrect ICX address</string>
     <string name="qrcodeScanGuide">Adrress can be imported by QR code.</string>
     <string name="getAddress">Address:</string>
+    <string name="address_hint">주소를 입력하거나 QR 코드를 통해 가져오세요.</string>
 </resources>

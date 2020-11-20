@@ -17,7 +17,8 @@ import com.google.android.gms.vision.barcode.Barcode;
 
 public class AddWalletActivity extends Activity {
 
-    static final int REQUEST_FOR_ADDRESS = 2;
+    public static final int REQUEST_FOR_ADDRESS = 1002;
+    public static final String Address = "Address";
 
     private EditText fromQrAddress;
 
@@ -25,6 +26,8 @@ public class AddWalletActivity extends Activity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_wallet);
+
+        fromQrAddress = findViewById(R.id.edit_address);
 
         ImageButton setQr = findViewById(R.id.btn_open_qr);
         setQr.setOnClickListener(new View.OnClickListener() {
@@ -38,7 +41,16 @@ public class AddWalletActivity extends Activity {
             }
         });
 
-        fromQrAddress = findViewById(R.id.edit_address);
+        Button confirm = findViewById(R.id.btn_confirm);
+        confirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent data = new Intent();
+                data.putExtra(Address, fromQrAddress.getText().toString());
+                setResult(CommonStatusCodes.SUCCESS, data);
+                finish();
+            }
+        });
     }
 
     @Override
