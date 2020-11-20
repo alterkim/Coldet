@@ -61,10 +61,6 @@ public class CreateTransactionActivity extends Activity {
             @Override
             public void onClick(View v) {
                 Transaction unsignedTransaction = createTransaction();
-                System.out.println(unsignedTransaction.getFrom());
-                System.out.println(unsignedTransaction.getTo());
-                System.out.println(unsignedTransaction.getValue());
-                System.out.println(unsignedTransaction.getNid());
             }
         });
     }
