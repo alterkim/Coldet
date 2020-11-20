@@ -63,8 +63,8 @@
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
                     android:hint="@string/address_hint"
-                    android:textSize="10sp"
-                    android:ellipsize="end"/>
+                    android:textSize="8sp"
+                    android:singleLine="true"/>
                 <ImageButton
                     android:id="@+id/btn_open_qr_to"
                     android:layout_width="wrap_content"
@@ -88,16 +88,17 @@
                     android:textColor="@color/black"
                     android:fontFamily="@font/noto_sans_bold"
                     android:layout_weight="0.3"/>
+
                 <EditText
                     android:id="@+id/et_fromAddress"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="6"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="67dp"
-                    android:textSize="10sp"
+                    android:layout_weight="6"
                     android:ellipsize="end"
-                    android:enabled="false"/>
+                    android:enabled="false"
+                    android:textSize="8sp" />
 
             </LinearLayout>
             <LinearLayout
@@ -122,7 +123,7 @@
                     android:layout_weight="6"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="9dp"
-                    android:textSize="10sp"
+                    android:textSize="8sp"
                     android:ellipsize="end" />
 
                 <TextView
@@ -156,7 +157,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
                     android:hint="@string/network_hint"
-                    android:textSize="10sp" />
+                    android:textSize="8sp" />
 
             </LinearLayout>
             <Button
