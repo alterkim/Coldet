@@ -60,7 +60,6 @@ public class CreateTransactionActivity extends Activity {
         btn_confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: Send transaction data to previous activity
                 Transaction unsignedTransaction = createTransaction();
                 System.out.println(unsignedTransaction.getFrom());
                 System.out.println(unsignedTransaction.getTo());
