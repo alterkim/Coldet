@@ -8,6 +8,8 @@ import android.widget.Button;
 
 import com.coldblock.coldet.Coldet;
 import com.coldblock.coldet.R;
+import com.coldblock.coldet.icon.SerializedUnsignedTransaction;
+import com.google.android.gms.common.api.CommonStatusCodes;
 
 public class WalletAddedActivity extends Activity {
     public static final int REQUEST_CREATE_TRANSACTION = 1005;
@@ -41,6 +43,13 @@ public class WalletAddedActivity extends Activity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode,resultCode,data);
 
-
+        if (requestCode == REQUEST_CREATE_TRANSACTION) {
+            if (resultCode == CommonStatusCodes.SUCCESS) {
+                if (data != null ){
+                    SerializedUnsignedTransaction unsignedTransaction = (SerializedUnsignedTransaction) data.getSerializableExtra(CreateTransactionActivity.UnsignedTransaction);
+                    System.out.println(unsignedTransaction.toString());
+                }
+            }
+        }
     }
 }
