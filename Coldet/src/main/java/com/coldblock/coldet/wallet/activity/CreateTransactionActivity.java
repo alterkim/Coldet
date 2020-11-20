@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 
 import com.coldblock.coldet.R;
+import com.coldblock.coldet.icon.SerializedUnsignedTransaction;
 import com.coldblock.coldet.wallet.barcode.BarcodeCaptureActivity;
 import com.google.android.gms.common.api.CommonStatusCodes;
 import com.google.android.gms.vision.barcode.Barcode;
@@ -21,7 +22,8 @@ import foundation.icon.icx.data.Address;
 import foundation.icon.icx.data.IconAmount;
 
 public class CreateTransactionActivity extends Activity {
-    public static int REQUEST_FOR_TO_ADDRESS = 1010;
+    public static final int REQUEST_FOR_TO_ADDRESS = 1010;
+    public static final String UnsignedTransaction = "unsignedTransaction";
 
     private EditText et_toAddress;
     private EditText et_fromAddress;
@@ -60,7 +62,13 @@ public class CreateTransactionActivity extends Activity {
         btn_confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Transaction unsignedTransaction = createTransaction();
+                Transaction transaction = createTransaction();
+                SerializedUnsignedTransaction unsignedTransaction = new SerializedUnsignedTransaction(transaction);
+
+                Intent data = new Intent();
+                data.putExtra(UnsignedTransaction, unsignedTransaction);
+                setResult(CommonStatusCodes.SUCCESS, data);
+                finish();
             }
         });
     }
