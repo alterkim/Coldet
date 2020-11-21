@@ -57,13 +57,13 @@ public class WalletAddedActivity extends Activity {
             if (resultCode == CommonStatusCodes.SUCCESS) {
                 if (data != null ){
                     unsignedTransaction = (SerializedUnsignedTransaction) data.getSerializableExtra(CreateTransactionActivity.UnsignedTransaction);
-                    setNfc();
+                    sendTransactionByNfc();
                 }
             }
         }
     }
 
-    private void setNfc() {
+    private void sendTransactionByNfc() {
         Intent data = new Intent(WalletAddedActivity.this, TagNfcDialog.class);
         byte[] byteSerializedTransaction = SerializeTransaction(unsignedTransaction);
         TagNfcDialog dialog = new TagNfcDialog(this, byteSerializedTransaction);
