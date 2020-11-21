@@ -2,6 +2,7 @@ package com.coldblock.coldet.nfc.dialog;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -9,6 +10,8 @@ import android.view.WindowManager;
 import android.widget.Button;
 
 import com.coldblock.coldet.R;
+import com.coldblock.coldet.nfc.service.NfcService;
+import com.coldblock.coldet.wallet.activity.WalletAddedActivity;
 
 public class TagNfcDialog extends Dialog implements View.OnClickListener {
 
@@ -40,6 +43,9 @@ public class TagNfcDialog extends Dialog implements View.OnClickListener {
         Button button = findViewById(R.id.btn_nfc_confirm);
         button.setOnClickListener(this);
 
+        Intent intent = new Intent(getContext(), NfcService.class);
+        intent.putExtra(WalletAddedActivity.Transaction, serializedTransaction);
+        context.startService(intent);
     }
 
     @Override
