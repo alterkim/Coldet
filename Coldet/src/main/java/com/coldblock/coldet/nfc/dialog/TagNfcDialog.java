@@ -1,4 +1,4 @@
-package com.coldblock.coldet.nfc;
+package com.coldblock.coldet.nfc.dialog;
 
 import android.app.Dialog;
 import android.content.Context;

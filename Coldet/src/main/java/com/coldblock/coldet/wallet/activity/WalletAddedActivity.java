@@ -9,8 +9,8 @@ import android.widget.Button;
 import com.coldblock.coldet.Coldet;
 import com.coldblock.coldet.R;
 import com.coldblock.coldet.icon.SerializedUnsignedTransaction;
-import com.coldblock.coldet.nfc.TagNfcDialog;
-import com.coldblock.coldet.nfc.TagNfcDialogListener;
+import com.coldblock.coldet.nfc.dialog.TagNfcDialog;
+import com.coldblock.coldet.nfc.dialog.TagNfcDialogListener;
 import com.google.android.gms.common.api.CommonStatusCodes;
 
 import java.io.ByteArrayOutputStream;
