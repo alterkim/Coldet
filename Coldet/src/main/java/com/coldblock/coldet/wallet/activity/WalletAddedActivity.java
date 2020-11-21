@@ -74,14 +74,6 @@ public class WalletAddedActivity extends Activity {
     private void sendTransactionByNfc() {
         Intent data = new Intent(WalletAddedActivity.this, TagNfcDialog.class);
         byte[] byteSerializedTransaction = SerializeTransaction(unsignedTransaction);
-//        TagNfcDialog dialog = new TagNfcDialog(this, byteSerializedTransaction);
-//        dialog.setDialogListener(new TagNfcDialogListener() {
-//            @Override
-//            public void getSignedTransaction(String test) {
-//                System.out.println("get Signed Transaction");
-//            }
-//        });
-//        dialog.show();
         data.putExtra(Transaction, byteSerializedTransaction);
         startActivityForResult(data, REQUEST_SEND_NFC_TRANSACTION);
     }
