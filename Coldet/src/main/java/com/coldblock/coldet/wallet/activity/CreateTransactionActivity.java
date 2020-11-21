@@ -22,6 +22,8 @@ import foundation.icon.icx.data.Address;
 import foundation.icon.icx.data.IconAmount;
 
 public class CreateTransactionActivity extends Activity {
+    private static final String TAG = "CreateTransactionActivity";
+
     public static final int REQUEST_FOR_TO_ADDRESS = 1010;
     public static final String UnsignedTransaction = "unsignedTransaction";
 

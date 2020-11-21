@@ -18,6 +18,8 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 
 public class WalletAddedActivity extends Activity {
+    private static final String TAG = "WalletAddedActivity";
+
     public static final int REQUEST_CREATE_TRANSACTION = 1005;
     public static final int REQUEST_SEND_NFC_TRANSACTION = 1006;
     public static final String Address = "address";

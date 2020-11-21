@@ -13,6 +13,8 @@ import com.coldblock.coldet.wallet.activity.WalletAddedActivity;
 import com.google.android.gms.common.api.CommonStatusCodes;
 
 public class Coldet extends Activity {
+    private static final String TAG = "Coldet";
+
     public static int GET_ADDRESS_BY_QR_CODE = 1001;
 //    public static int ADD_WALLET_ADDRESS = 1003;
     public static String Address = "address";

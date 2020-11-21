@@ -20,6 +20,7 @@ import com.coldblock.coldet.wallet.activity.WalletAddedActivity;
 import com.google.android.gms.common.api.CommonStatusCodes;
 
 public class TagNfcDialog extends Activity implements View.OnClickListener {
+    private static final String TAG = "TagNfcDialog";
 
     public static final int REQUEST_NFC_TRANSMISSION = 1020;
     public static final String NFC_ADAPTER = "nfcAdapter";

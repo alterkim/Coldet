@@ -16,6 +16,7 @@ import com.google.android.gms.common.api.CommonStatusCodes;
 import com.google.android.gms.vision.barcode.Barcode;
 
 public class AddWalletActivity extends Activity {
+    private static final String TAG = "AddWalletActivity";
 
     public static final int REQUEST_FOR_ADDRESS = 1002;
     public static final String Address = "Address";
