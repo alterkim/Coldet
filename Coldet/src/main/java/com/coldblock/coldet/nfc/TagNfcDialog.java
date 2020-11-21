@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 
 import com.coldblock.coldet.R;
@@ -31,14 +32,13 @@ public class TagNfcDialog extends Dialog implements View.OnClickListener {
         super.onCreate(savedBundle);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.dialog_tag_nfc);
+        WindowManager.LayoutParams params = getWindow().getAttributes();
+        params.width = WindowManager.LayoutParams.MATCH_PARENT;
+        params.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        getWindow().setAttributes(params);
 
-//        Button button = findViewById(R.id.btn_nfc_confirm);
-//        button.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//            }
-//        });
+        Button button = findViewById(R.id.btn_nfc_confirm);
+        button.setOnClickListener(this);
 
     }
 
