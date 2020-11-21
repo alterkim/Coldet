@@ -18,11 +18,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Coldet">
-        <service
-            android:name=".nfc.service.NfcService"
-            android:enabled="true"
-            android:exported="true"></service>
-
         <activity android:name=".Coldet">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -34,6 +29,10 @@
         <activity android:name=".wallet.barcode.BarcodeCaptureActivity" />
         <activity android:name=".wallet.activity.WalletAddedActivity" />
         <activity android:name=".wallet.activity.CreateTransactionActivity" />
+        <activity android:name=".nfc.dialog.TagNfcDialog"
+            android:theme="@android:style/Theme.Dialog"/>
+        <activity android:name=".nfc.activity.NfcActivity"
+            android:theme="@style/Transparent"/>
     </application>
 
 </manifest>
