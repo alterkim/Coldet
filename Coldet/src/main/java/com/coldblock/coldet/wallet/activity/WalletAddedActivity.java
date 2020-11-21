@@ -55,9 +55,17 @@ public class WalletAddedActivity extends Activity {
 
         if (requestCode == REQUEST_CREATE_TRANSACTION) {
             if (resultCode == CommonStatusCodes.SUCCESS) {
-                if (data != null ){
+                if (data != null){
                     unsignedTransaction = (SerializedUnsignedTransaction) data.getSerializableExtra(CreateTransactionActivity.UnsignedTransaction);
                     sendTransactionByNfc();
+                }
+            }
+        }
+        else if (requestCode == REQUEST_SEND_NFC_TRANSACTION) {
+            if (resultCode == CommonStatusCodes.SUCCESS) {
+                if (data != null) {
+                    // TODO: send signedTransaction to network
+                    System.out.println("Done NFC");
                 }
             }
         }
@@ -66,14 +74,16 @@ public class WalletAddedActivity extends Activity {
     private void sendTransactionByNfc() {
         Intent data = new Intent(WalletAddedActivity.this, TagNfcDialog.class);
         byte[] byteSerializedTransaction = SerializeTransaction(unsignedTransaction);
-        TagNfcDialog dialog = new TagNfcDialog(this, byteSerializedTransaction);
-        dialog.setDialogListener(new TagNfcDialogListener() {
-            @Override
-            public void getSignedTransaction(String test) {
-                System.out.println("get Signed Transaction");
-            }
-        });
-        dialog.show();
+//        TagNfcDialog dialog = new TagNfcDialog(this, byteSerializedTransaction);
+//        dialog.setDialogListener(new TagNfcDialogListener() {
+//            @Override
+//            public void getSignedTransaction(String test) {
+//                System.out.println("get Signed Transaction");
+//            }
+//        });
+//        dialog.show();
+        data.putExtra(Transaction, byteSerializedTransaction);
+        startActivityForResult(data, REQUEST_SEND_NFC_TRANSACTION);
     }
 
     private byte[] SerializeTransaction(SerializedUnsignedTransaction unsignedTransaction) {
