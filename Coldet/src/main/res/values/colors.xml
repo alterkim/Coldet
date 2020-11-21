@@ -9,4 +9,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="dark26">#E5262626</color>
     <color name="darkAlpha">#07000000</color>
+    <color name="transparent">#CC000000</color>
 </resources>
