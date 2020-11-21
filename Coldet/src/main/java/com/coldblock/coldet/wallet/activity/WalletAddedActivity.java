@@ -9,11 +9,21 @@ import android.widget.Button;
 import com.coldblock.coldet.Coldet;
 import com.coldblock.coldet.R;
 import com.coldblock.coldet.icon.SerializedUnsignedTransaction;
+import com.coldblock.coldet.nfc.TagNfcDialog;
+import com.coldblock.coldet.nfc.TagNfcDialogListener;
 import com.google.android.gms.common.api.CommonStatusCodes;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 
 public class WalletAddedActivity extends Activity {
     public static final int REQUEST_CREATE_TRANSACTION = 1005;
+    public static final int REQUEST_SEND_NFC_TRANSACTION = 1006;
     public static final String Address = "address";
+    public static final String Transaction = "transaction";
+
+    private SerializedUnsignedTransaction unsignedTransaction;
 
     @Override
     protected void onCreate(Bundle savedBundle) {
@@ -46,10 +56,36 @@ public class WalletAddedActivity extends Activity {
         if (requestCode == REQUEST_CREATE_TRANSACTION) {
             if (resultCode == CommonStatusCodes.SUCCESS) {
                 if (data != null ){
-                    SerializedUnsignedTransaction unsignedTransaction = (SerializedUnsignedTransaction) data.getSerializableExtra(CreateTransactionActivity.UnsignedTransaction);
-                    System.out.println(unsignedTransaction.toString());
+                    unsignedTransaction = (SerializedUnsignedTransaction) data.getSerializableExtra(CreateTransactionActivity.UnsignedTransaction);
+                    setNfc();
                 }
             }
         }
+    }
+
+    private void setNfc() {
+        Intent data = new Intent(WalletAddedActivity.this, TagNfcDialog.class);
+        byte[] byteSerializedTransaction = SerializeTransaction(unsignedTransaction);
+        TagNfcDialog dialog = new TagNfcDialog(this, byteSerializedTransaction);
+        dialog.setDialogListener(new TagNfcDialogListener() {
+            @Override
+            public void getSignedTransaction(String test) {
+                System.out.println("get Signed Transaction");
+            }
+        });
+        dialog.show();
+    }
+
+    private byte[] SerializeTransaction(SerializedUnsignedTransaction unsignedTransaction) {
+        byte[] byteSerializedTransaction = new byte[0];
+        try (ByteArrayOutputStream baos = new ByteArrayOutputStream()){
+            try(ObjectOutputStream oos = new ObjectOutputStream(baos)){
+                oos.writeObject(unsignedTransaction);
+                byteSerializedTransaction = baos.toByteArray();
+            }
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
+        return byteSerializedTransaction;
     }
 }

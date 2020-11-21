@@ -16,4 +16,5 @@
     <string name="icx">ICX</string>
     <string name="network_id">Network ID:</string>
     <string name="transaction_info">Transaction Info</string>
+    <string name="tag_nfc">Tag phone to NFC module</string>
 </resources>
