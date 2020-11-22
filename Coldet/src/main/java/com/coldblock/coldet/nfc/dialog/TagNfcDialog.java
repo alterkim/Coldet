@@ -29,11 +29,14 @@ import com.google.android.gms.common.api.CommonStatusCodes;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.util.Arrays;
 
 public class TagNfcDialog extends Activity {
     private static final String TAG = "TagNfcDialog";
 
     public static final int REQUEST_NFC_TRANSMISSION = 1020;
+    public static final int MAX_TAG_VOLUME = 752;
+    public static final int MAX_RECORD_VOLUME = 16;
     public static final String NFC_ADAPTER = "nfcAdapter";
 
     private byte[] serializedTransaction;
@@ -56,6 +59,11 @@ public class TagNfcDialog extends Activity {
 
         Intent intent = getIntent();
         serializedTransaction = intent.getByteArrayExtra(WalletAddedActivity.Transaction);
+        if(serializedTransaction.length % MAX_RECORD_VOLUME != 0) {
+            int needByteForFullRecord = MAX_RECORD_VOLUME - (serializedTransaction.length % MAX_RECORD_VOLUME);
+            byte[] additional = CreateByteArrayForMaxRecord(needByteForFullRecord);
+            serializedTransaction =concatByteArray(serializedTransaction, additional);
+        }
 
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
         Intent nfcIntent = new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
@@ -83,7 +91,8 @@ public class TagNfcDialog extends Activity {
     private void resolveIntent(Intent intent) {
         // Parse the intent and get the action that triggered this intent
         String action = intent.getAction();
-        ReadNFC(intent, action);
+        //ReadNFC(intent, action);
+        WriteNFC(intent, action);
     }
 
     private void ReadNFC(Intent intent, String action) {
@@ -98,13 +107,13 @@ public class TagNfcDialog extends Activity {
             try {
                 tagMfc.connect();
 
-                for (int i = 0; i < tagMfc.getSectorCount(); i++ ){
-                    if(tagMfc.authenticateSectorWithKeyA(i, MifareClassic.KEY_DEFAULT)) {
+                for (int sectorNum = 0; sectorNum < tagMfc.getSectorCount(); sectorNum++ ){
+                    if(tagMfc.authenticateSectorWithKeyA(sectorNum, MifareClassic.KEY_DEFAULT)) {
                         Log.d(TAG, "Authentication success!");
 
-                        for(int j = 0; j < tagMfc.getBlockCountInSector(j); j++) {
-                            data = tagMfc.readBlock(4*i +j);
-                            Log.d(TAG, toHexString(data));
+                        for(int blockNum = 0; blockNum < tagMfc.getBlockCountInSector(sectorNum); blockNum++) {
+                            data = tagMfc.readBlock(4*sectorNum +blockNum);
+                            Log.d(TAG, "Sector " + sectorNum + ", " + "Block "+ blockNum + ": " + toHexString(data));
                         }
                     }
                     else {
@@ -114,6 +123,52 @@ public class TagNfcDialog extends Activity {
                 }
             } catch (IOException e) {
                 Log.e(TAG, e.getLocalizedMessage());
+            }
+        }
+    }
+
+    private void WriteNFC(Intent intent, String action){
+        if (NfcAdapter.ACTION_TECH_DISCOVERED.equals(action)) {
+            // Get an instance fo the TAG from the NfcAdapter
+            Tag tagFromIntent = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
+            // Get an instance of the Mifare classic card from this TAG intent
+            MifareClassic tagMfc = MifareClassic.get(tagFromIntent);
+
+            try {
+                tagMfc.connect();
+
+                if(serializedTransaction.length > MAX_TAG_VOLUME) {
+                    Log.d(TAG, "The size of transaction is bigger than available size");
+                } else {
+                    int start = 0;
+                    for (int sectorNum = 0; sectorNum < tagMfc.getSectorCount(); sectorNum++) {
+                        if (tagMfc.authenticateSectorWithKeyA(sectorNum, MifareClassic.KEY_DEFAULT)) {
+                            Log.d(TAG, "Authentication success!");
+
+                            for (int blockNum = 0; blockNum < tagMfc.getBlockCountInSector(blockNum) - 1; blockNum++) {
+                                if (start == serializedTransaction.length) {
+                                    Log.d(TAG, "Write is complete");
+                                    break;
+                                } else {
+                                    if (sectorNum == 0 && blockNum == 0){
+                                        continue;
+                                    }
+                                    else {
+                                        byte[] record = Arrays.copyOfRange(serializedTransaction, start, start + 16);
+                                        tagMfc.writeBlock(4 * sectorNum + blockNum, record);
+                                        Log.d(TAG, "Sector " + sectorNum + ", " + "Block "+ blockNum + ": " + toHexString(record));
+                                    }
+                                }
+                                start += 16;
+                            }
+                        } else {
+                            Log.d(TAG, "Authentication failed!");
+                        }
+                    }
+                }
+
+            } catch (IOException e) {
+                Log.d(TAG, e.getLocalizedMessage());
             }
         }
     }
@@ -152,7 +207,6 @@ public class TagNfcDialog extends Activity {
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         resolveIntent(intent);
-//        Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
 //        if (tag != null) {
 //            ProcessNFC();
 //        }
@@ -163,9 +217,13 @@ public class TagNfcDialog extends Activity {
         data.putExtra(WalletAddedActivity.Transaction, serializedTransaction);
         startActivityForResult(data, REQUEST_NFC_TRANSMISSION);
     }
-    
-    private void WriteTransactionToTag() {
-        //TODO: Write the transaction data to tag
+
+    private byte[] CreateByteArrayForMaxRecord(int needByteForFullRecord) {
+        StringBuilder string_data = new StringBuilder();
+        for (int i = 0; i < needByteForFullRecord; i++ ){
+            string_data.append("ff");
+        }
+        return hexStringToByteArray(string_data.toString());
     }
 
     public static final String CHARS = "0123456789ABCDEF";
@@ -189,5 +247,21 @@ public class TagNfcDialog extends Activity {
         }
 
         return string_data.toString();
+    }
+
+    public static byte[] hexStringToByteArray(String s) {
+        int len = s.length();
+        byte[] data = new byte[len / 2];
+        for (int i = 0; i < len; i += 2) {
+            data[i / 2] = (byte) ((Character.digit(s.charAt(i), 16) << 4)
+                    + Character.digit(s.charAt(i+1), 16));
+        }
+        return data;
+    }
+
+    public static byte[] concatByteArray(final byte[] array1, byte[] array2) {
+        byte[] joinedArray = Arrays.copyOf(array1, array1.length + array2.length);
+        System.arraycopy(array2, 0, joinedArray, array1.length, array2.length);
+        return joinedArray;
     }
 }
