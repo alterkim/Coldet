@@ -31,8 +31,16 @@
         <activity android:name=".wallet.activity.CreateTransactionActivity" />
         <activity android:name=".nfc.dialog.TagNfcDialog"
             android:theme="@android:style/Theme.Dialog"/>
-        <activity android:name=".nfc.activity.NfcActivity"
-            android:theme="@style/Transparent"/>
+        <activity
+            android:name=".nfc.activity.NfcActivity"
+            android:theme="@style/Transparent">
+            <intent-filter>
+                <action android:name="android.nfc.action.TECH_DISCOVERED" />
+            </intent-filter>
+            <meta-data
+                android:name="android.nfc.action.TECH_DISCOVERED"
+                android:resource="@xml/nfc_tech_filter" />
+        </activity>
     </application>
 
 </manifest>
