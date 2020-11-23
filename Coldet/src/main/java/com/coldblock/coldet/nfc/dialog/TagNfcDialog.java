@@ -24,6 +24,7 @@ import android.widget.Toast;
 
 import com.coldblock.coldet.R;
 import com.coldblock.coldet.nfc.activity.NfcActivity;
+import com.coldblock.coldet.nfc.service.myHostApduService;
 import com.coldblock.coldet.wallet.activity.WalletAddedActivity;
 import com.google.android.gms.common.api.CommonStatusCodes;
 
@@ -40,6 +41,7 @@ public class TagNfcDialog extends Activity {
     public static final String NFC_ADAPTER = "nfcAdapter";
 
     private byte[] serializedTransaction;
+    private byte[] length;
 
     private NfcAdapter nfcAdapter;
     private PendingIntent pendingIntent;
@@ -59,8 +61,10 @@ public class TagNfcDialog extends Activity {
 
         Intent intent = getIntent();
         serializedTransaction = intent.getByteArrayExtra(WalletAddedActivity.Transaction);
+        // Add length information
+        length = intToByteArray(serializedTransaction.length);
         if(serializedTransaction.length % MAX_RECORD_VOLUME != 0) {
-            int needByteForFullRecord = MAX_RECORD_VOLUME - (serializedTransaction.length % MAX_RECORD_VOLUME);
+            int needByteForFullRecord = MAX_RECORD_VOLUME - ((serializedTransaction.length + 4) % MAX_RECORD_VOLUME);
             byte[] additional = CreateByteArrayForMaxRecord(needByteForFullRecord);
             serializedTransaction =concatByteArray(serializedTransaction, additional);
         }
@@ -85,7 +89,9 @@ public class TagNfcDialog extends Activity {
         mTechLists = new String[][]{
                 new String[]{MifareClassic.class.getName()}
         };
-
+//        Intent apduIntent = new Intent(TagNfcDialog.this, myHostApduService.class);
+//        apduIntent.putExtra(WalletAddedActivity.Transaction, serializedTransaction);
+//        startService(apduIntent);
     }
 
     private void resolveIntent(Intent intent) {
@@ -93,6 +99,7 @@ public class TagNfcDialog extends Activity {
         String action = intent.getAction();
         //ReadNFC(intent, action);
         WriteNFC(intent, action);
+
     }
 
     private void ReadNFC(Intent intent, String action) {
@@ -153,13 +160,20 @@ public class TagNfcDialog extends Activity {
                                     if (sectorNum == 0 && blockNum == 0){
                                         continue;
                                     }
+                                    else if (sectorNum == 0 && blockNum == 1) {
+                                        byte[] record = Arrays.copyOfRange(serializedTransaction, start, start + 12);
+                                        record = concatByteArray(length, record);
+                                        tagMfc.writeBlock(4 * sectorNum + blockNum, record);
+                                        Log.d(TAG, "Sector " + sectorNum + ", " + "Block "+ blockNum + ": " + toHexString(record));
+                                        start += 12;
+                                    }
                                     else {
                                         byte[] record = Arrays.copyOfRange(serializedTransaction, start, start + 16);
                                         tagMfc.writeBlock(4 * sectorNum + blockNum, record);
                                         Log.d(TAG, "Sector " + sectorNum + ", " + "Block "+ blockNum + ": " + toHexString(record));
+                                        start += 16;
                                     }
                                 }
-                                start += 16;
                             }
                         } else {
                             Log.d(TAG, "Authentication failed!");
@@ -207,9 +221,16 @@ public class TagNfcDialog extends Activity {
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         resolveIntent(intent);
-//        if (tag != null) {
-//            ProcessNFC();
-//        }
+        Log.d(TAG, "Complete writing");
+        try {
+            Log.d(TAG, "Turn off the NFC");
+            Thread.sleep(10000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        if (!nfcAdapter.isEnabled()){
+            ProcessNFC();
+        }
     }
 
     private void ProcessNFC(){
@@ -263,5 +284,16 @@ public class TagNfcDialog extends Activity {
         byte[] joinedArray = Arrays.copyOf(array1, array1.length + array2.length);
         System.arraycopy(array2, 0, joinedArray, array1.length, array2.length);
         return joinedArray;
+    }
+
+    public static byte[] intToByteArray(int length) {
+        byte[] bytes=new byte[4];
+        bytes[0]=(byte)((length & 0xFF000000)>>24);
+        bytes[1]=(byte)((length & 0x00FF0000)>>16);
+        bytes[2]=(byte)((length & 0x0000FF00)>>8);
+        bytes[3]=(byte) (length & 0x000000FF);
+
+
+        return bytes;
     }
 }
