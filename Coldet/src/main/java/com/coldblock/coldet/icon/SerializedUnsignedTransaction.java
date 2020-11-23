@@ -9,6 +9,7 @@ import foundation.icon.icx.Transaction;
 import foundation.icon.icx.transport.jsonrpc.RpcItem;
 
 public class SerializedUnsignedTransaction implements Serializable {
+    private static final long serialVersionUID = 1004;
     private final BigInteger version;
     private final String from;
     private final String to;
@@ -18,7 +19,7 @@ public class SerializedUnsignedTransaction implements Serializable {
     private final BigInteger nid;
     private final BigInteger nonce;
     private final String dataType;
-    private final RpcItem data;
+    //private final RpcItem data;
     // private final RpcObject properties;
 
     public SerializedUnsignedTransaction(Transaction transaction){
@@ -31,7 +32,7 @@ public class SerializedUnsignedTransaction implements Serializable {
         this.nid = transaction.getNid();
         this.nonce = transaction.getNonce();
         this.dataType = transaction.getDataType();
-        this.data = transaction.getData();
+        // this.data = transaction.getData();
         // this.properties = transaction.getProperties();
     }
 
@@ -47,7 +48,6 @@ public class SerializedUnsignedTransaction implements Serializable {
                 ", nid=" + nid +
                 ", nonce=" + nonce +
                 ", dataType='" + dataType + '\'' +
-                ", data=" + data +
                 '}';
     }
 
