@@ -19,6 +19,7 @@ package foundation.icon.icx.transport.jsonrpc;
 import foundation.icon.icx.data.Address;
 import foundation.icon.icx.data.Bytes;
 
+import java.io.Serializable;
 import java.math.BigInteger;
 
 import static foundation.icon.icx.data.Bytes.HEX_PREFIX;
@@ -26,7 +27,7 @@ import static foundation.icon.icx.data.Bytes.HEX_PREFIX;
 /**
  * RpcValue contains a leaf value such as string, bytes, integer, boolean
  */
-public class RpcValue implements RpcItem {
+public class RpcValue implements RpcItem, Serializable {
 
     private String value;
 

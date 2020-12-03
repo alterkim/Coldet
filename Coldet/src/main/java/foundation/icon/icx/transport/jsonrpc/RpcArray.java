@@ -16,6 +16,7 @@
 
 package foundation.icon.icx.transport.jsonrpc;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -23,7 +24,7 @@ import java.util.List;
 /**
  * A read-only data class of RpcArray
  */
-public class RpcArray implements RpcItem, Iterable<RpcItem> {
+public class RpcArray implements RpcItem, Iterable<RpcItem>, Serializable {
     private final List<RpcItem> items;
 
     private RpcArray(List<RpcItem> items) {

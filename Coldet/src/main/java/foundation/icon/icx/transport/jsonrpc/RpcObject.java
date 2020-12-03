@@ -16,6 +16,7 @@
 
 package foundation.icon.icx.transport.jsonrpc;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -25,7 +26,7 @@ import java.util.TreeMap;
 /**
  * A read-only data class of RpcObject
  */
-public class RpcObject implements RpcItem {
+public class RpcObject implements RpcItem, Serializable {
     private final Map<String, RpcItem> items;
 
     private RpcObject(Map<String, RpcItem> items) {
