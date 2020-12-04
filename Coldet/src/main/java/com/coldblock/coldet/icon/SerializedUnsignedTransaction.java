@@ -25,7 +25,7 @@ public class SerializedUnsignedTransaction implements Serializable {
     public SerializedUnsignedTransaction(Transaction transaction){
         this.version = transaction.getVersion();
         this.from = transaction.getFrom().getPrefix().getValue() + Hex.toHexString(transaction.getFrom().getBody());
-        this.to = transaction.getTo().getPrefix().getValue() + Hex.toHexString(transaction.getFrom().getBody());
+        this.to = transaction.getTo().getPrefix().getValue() + Hex.toHexString(transaction.getTo().getBody());
         this.value = transaction.getValue();
         this.stepLimit = transaction.getStepLimit();
         this.timeStamp = transaction.getTimestamp();
