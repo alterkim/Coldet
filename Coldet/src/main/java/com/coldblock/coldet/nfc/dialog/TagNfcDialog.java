@@ -195,7 +195,10 @@ public class TagNfcDialog extends Activity {
         if (requestCode == REQUEST_NFC_TRANSMISSION) {
             if (resultCode == CommonStatusCodes.SUCCESS) {
                 if (data != null) {
-                    System.out.println("Finish NfcActivity");
+                    Intent goBack = new Intent();
+                    goBack.putExtra(NfcActivity.SerializedSignTransaction, data.getByteArrayExtra(NfcActivity.SerializedSignTransaction));
+                    setResult(CommonStatusCodes.SUCCESS, goBack);
+                    finish();
                 }
             }
         }
