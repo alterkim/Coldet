@@ -36,6 +36,18 @@ public class SerializedUnsignedTransaction implements Serializable {
         // this.properties = transaction.getProperties();
     }
 
+    public String getFrom(){
+        return this.from;
+    }
+
+    public String getTo(){
+        return this.to;
+    }
+
+    public BigInteger getValue(){
+        return this.value;
+    }
+
     @Override
     public String toString() {
         return "SerializedUnsignedTransaction{" +
