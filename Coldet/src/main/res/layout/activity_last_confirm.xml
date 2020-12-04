@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="60dp"
+        android:textColor="@color/white"
+        android:textSize="30sp"
+        android:gravity="center_horizontal"
+        android:text="@string/last_confirm"
+        android:fontFamily="@font/noto_sans_bold"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="70dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginTop="40dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:background="@drawable/round_rectangle">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/transaction_info"
+                android:textSize="20sp"
+                android:textColor="@color/black"
+                android:fontFamily="@font/noto_sans_bold"
+                android:gravity="center"
+                android:layout_marginTop="35dp"
+                android:layout_gravity="center"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:text="@string/to"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/noto_sans_bold"
+                    android:layout_weight="0.3"/>
+
+                <EditText
+                    android:id="@+id/lc_fromAddress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="67dp"
+                    android:layout_weight="6"
+                    android:ellipsize="end"
+                    android:enabled="false"
+                    android:textSize="8sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:text="@string/from"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/noto_sans_bold"
+                    android:layout_weight="0.3"/>
+
+                <EditText
+                    android:id="@+id/lc_toAddress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="67dp"
+                    android:layout_weight="6"
+                    android:ellipsize="end"
+                    android:enabled="false"
+                    android:textSize="8sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:text="@string/value"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/noto_sans_bold"
+                    android:layout_weight="0.3"/>
+                <EditText
+                    android:id="@+id/lc_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="6"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="9dp"
+                    android:textSize="8sp"
+                    android:ellipsize="end"
+                    android:enabled="false"/>
+
+                <TextView
+                    android:id="@+id/value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/icx"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/noto_sans_medium"
+                    android:layout_marginRight="35dp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="70dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="70dp"
+                    android:id="@+id/btn_last_confirm"
+                    android:background="@drawable/round_rectangle_confirm"
+                    android:text="@string/confirm"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/noto_sans_medium"/>
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:id="@+id/btn_cancel"
+                    android:background="@drawable/round_rectangle_confirm"
+                    android:text="@string/cancel"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/noto_sans_medium"/>
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>
