@@ -39,8 +39,8 @@ import static foundation.icon.icx.TransactionBuilder.checkArgument;
  */
 public class SignedTransaction {
 
-    private final Transaction transaction;
-    private final Wallet wallet;
+    private Transaction transaction;
+    private Wallet wallet;
     private RpcObject properties;
 
     /**
@@ -55,6 +55,10 @@ public class SignedTransaction {
         this.transaction = transaction;
         this.wallet = wallet;
         createProperties(null);
+    }
+
+    public SignedTransaction() {
+
     }
 
     /**
@@ -72,6 +76,10 @@ public class SignedTransaction {
         this.transaction = transaction;
         this.wallet = wallet;
         createProperties(stepLimit);
+    }
+
+    public void setProperties(RpcObject properties) {
+        this.properties = properties;
     }
 
     /**
